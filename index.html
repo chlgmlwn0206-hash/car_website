@@ -504,7 +504,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
 .s1-result-count {
   font-size: 13px; color: var(--text2); padding: 12px 16px;
   border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-start; gap: 4px;
 }
 .s1-result-count span { color: var(--accent); font-weight: 600; }
 
@@ -1069,7 +1069,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
   <div class="hero-image-side">
     <div class="hero-car-visual">
       <div class="hero-notification">✓ 오늘 출고 가능</div>
-      <div class="hero-car-img">#</div>
+      <div class="hero-car-img"><img src="https://i.namu.wiki/i/4JzhM2gpMdMcUHCtD1yFSC98IlSWM0RjL5-mh4uLspLh8kDNoxPs37j_n0w0D6EPRQF9-kR9FLW1Cx65r21DMw.webp" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
       <div class="hero-car-info">
         <div class="hero-car-name">기아 스포티지 NQ5</div>
         <div class="hero-car-price">2,490만원</div>
@@ -1205,7 +1205,8 @@ button { cursor: pointer; font-family: var(--font-ko); }
           </div>
         </div>
         <div class="s1-result-count">
-          검색 가능 차량 <span id="resultCount">34</span>건
+          <span style="color:var(--text2);font-weight:normal;">검색 가능 차량</span><span style="margin-left:auto;"><span id="resultCount">34</span>
+          <span style="color:var(--text2);font-weight:normal;">건</span></span>
         </div>
       </div>
     </div>
@@ -1402,7 +1403,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
       <div class="quick-grid">
         <div class="quick-card" onclick="openConsultModal('현대 투싼 NX4','2,290만원')">
           <div class="quick-img">
-            #
+            <div class="hero-car-img"><img src="https://i.namu.wiki/i/4JzhM2gpMdMcUHCtD1yFSC98IlSWM0RjL5-mh4uLspLh8kDNoxPs37j_n0w0D6EPRQF9-kR9FLW1Cx65r21DMw.webp" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
             <div class="quick-badge">당일출고</div>
           </div>
           <div class="quick-body">
@@ -1418,7 +1419,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
         <div class="quick-card" onclick="openConsultModal('기아 카니발 KA4','3,100만원')">
           <div class="quick-img">
-            #
+            <div class="hero-car-img"><img src="https://i.namu.wiki/i/4JzhM2gpMdMcUHCtD1yFSC98IlSWM0RjL5-mh4uLspLh8kDNoxPs37j_n0w0D6EPRQF9-kR9FLW1Cx65r21DMw.webp" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
             <div class="quick-badge">당일출고</div>
           </div>
           <div class="quick-body">
@@ -1434,7 +1435,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
         <div class="quick-card" onclick="openConsultModal('르노 SM6','1,380만원')">
           <div class="quick-img">
-            #
+            <div class="hero-car-img"><img src="https://i.namu.wiki/i/4JzhM2gpMdMcUHCtD1yFSC98IlSWM0RjL5-mh4uLspLh8kDNoxPs37j_n0w0D6EPRQF9-kR9FLW1Cx65r21DMw.webp" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
             <div class="quick-badge">당일출고</div>
           </div>
           <div class="quick-body">
@@ -1503,7 +1504,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
         <div class="review-stars">★★★★★</div>
         <div class="review-car">현대 아반떼 AD · 1,190만원</div>
-        <div class="review-photo">📷</div>
+        <div class="hero-car-img"><img src="https://i.ifh.cc/l7yDPS.png" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
         <div class="review-text">처음에 반신반의했는데 정말 허위매물 없이 좋은 차 구매했어요. 상담사분도 친절하시고 빠르게 진행해주셔서 만족스럽습니다.</div>
       </div>
       <div class="review-card">
@@ -1516,7 +1517,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
         <div class="review-stars">★★★★★</div>
         <div class="review-car">기아 K5 3세대 · 1,650만원</div>
-        <div class="review-photo">📷</div>
+        <div class="hero-car-img"><img src="https://i.ifh.cc/l7yDPS.png" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
         <div class="review-text">금융 조건 때문에 걱정이 많았는데 무직자도 가능하다고 해서 문의했어요. 생각보다 훨씬 좋은 금리로 진행할 수 있었습니다!</div>
       </div>
       <div class="review-card">
@@ -1529,7 +1530,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
         <div class="review-stars">★★★★★</div>
         <div class="review-car">현대 투싼 NX4 · 2,290만원</div>
-        <div class="review-photo">📷</div>
+        <div class="hero-car-img"><img src="https://i.ifh.cc/l7yDPS.png" alt="스포티지" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
         <div class="review-text">당일 출고라 반신반의했는데 오전에 계약하고 오후에 차량 받았어요. 무사고 차량에 상태도 정말 좋았습니다. 강추해요.</div>
       </div>
     </div>
