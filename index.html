@@ -888,6 +888,31 @@ button { cursor: pointer; font-family: var(--font-ko); }
   .float-cta { right: 12px; bottom: 16px; }
   .float-btn { padding: 10px 14px; font-size: 12px; }
 }
+
+@media (max-width: 768px) {
+  .hero-image-side {
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 0 24px;
+    margin-top: 24px;
+  }
+
+  .hero-car-visual {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    order: 1;
+  }
+
+  .hero-image-side {
+    order: 2;
+  }
+}
+
 </style>
 </head>
 <body>
