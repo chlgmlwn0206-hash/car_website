@@ -272,6 +272,15 @@ button { cursor: pointer; font-family: var(--font-ko); }
   transform: translateX(150px);
 }
 
+@media (max-width: 768px) {
+  .hero .container {
+    transform: none;          /* ← 이게 핵심 */
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
 .hero-stats {
   margin-top: 40px;
 }
@@ -355,6 +364,14 @@ button { cursor: pointer; font-family: var(--font-ko); }
   position: relative; z-index: 2;
   max-width: 580px; padding-left: 80px;
 }
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   background: rgba(232,255,71,0.08); border: 1px solid rgba(232,255,71,0.2);
@@ -400,6 +417,14 @@ button { cursor: pointer; font-family: var(--font-ko); }
   font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius-xs);
   transition: background 0.15s; white-space: nowrap;
 }
+
+@media (max-width: 768px) {
+  .search-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
 .search-btn:hover { background: var(--accent2); }
 .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
 .hero-stat-num {
