@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarTrust — 딜러 수수료 없는 중고차 플랫폼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+/* ─── CSS Variables ─── */
+:root {
+  --bg:        #0d0d0d;
+  --bg2:       #141414;
+  --bg3:       #1a1a1a;
+  --bg4:       #222;
+  --border:    #2a2a2a;
+  --border2:   #333;
+  --text:      #f0f0f0;
+  --text2:     #aaa;
+  --text3:     #666;
+  --accent:    #e8ff47;        /* 형광 옐로우 — 브랜드 포인트 */
+  --accent2:   #c8dc30;
+  --green:     #1D9E75;
+  --green-bg:  #0a2e18;
+  --green-txt: #4dd4a0;
+  --blue:      #378ADD;
+  --blue-bg:   #0a1e35;
+  --orange:    #EF9F27;
+  --orange-bg: #2a1f00;
+  --red:       #ff6060;
+  --red-bg:    #3d1010;
+  --font-ko:   'Noto Sans KR', sans-serif;
+  --font-en:   'Bebas Neue', cursive;
+  --radius:    12px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ko);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: var(--font-ko); }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes slideIn {
+  from { transform: translateX(-16px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(232,255,71,0.15); }
+  50%       { box-shadow: 0 0 28px rgba(232,255,71,0.35); }
+}
+
+.fade-up  { animation: fadeUp  0.55s ease both; }
+.fade-in  { animation: fadeIn  0.4s ease both; }
+.d1 { animation-delay: 0.05s; }
+.d2 { animation-delay: 0.12s; }
+.d3 { animation-delay: 0.19s; }
+.d4 { animation-delay: 0.26s; }
+.d5 { animation-delay: 0.33s; }
+
+/* ─── Common Components ─── */
+.section { padding: 72px 0; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+.sec-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.sec-eyebrow::before {
+  content: ''; width: 20px; height: 1.5px; background: var(--accent); display: block;
+}
+.sec-title {
+  font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--text);
+  line-height: 1.3; margin-bottom: 8px;
+}
+.sec-sub {
+  font-size: 14px; color: var(--text2); margin-bottom: 40px;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: var(--radius-sm);
+  background: var(--accent); color: #111; font-size: 14px; font-weight: 600;
+  border: none; transition: background 0.18s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text); font-size: 14px; font-weight: 500;
+  border: 1px solid var(--border2); transition: border-color 0.18s, color 0.18s;
+}
+.btn-ghost:hover { border-color: #555; color: #fff; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500;
+}
+.badge-green { background: var(--green-bg); color: var(--green-txt); border: 1px solid var(--green); }
+.badge-orange { background: var(--orange-bg); color: var(--orange); border: 1px solid #854F0B; }
+.badge-blue { background: var(--blue-bg); color: #7ec8ff; border: 1px solid #1a5080; }
+.badge-red { background: var(--red-bg); color: var(--red); border: 1px solid #7a2020; }
+.badge-accent { background: rgba(232,255,71,0.1); color: var(--accent); border: 1px solid rgba(232,255,71,0.3); }
+
+.check-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.check-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--green-bg); border: 1px solid var(--green);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-size: 11px; font-weight: 700; color: var(--green-txt); line-height: 1;
+}
+.check-label { font-size: 13px; color: var(--text); }
+
+
+/* ─── Ticker ─── */
+.ticker-wrap {
+  background: var(--accent); overflow: hidden; padding: 10px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+.ticker-inner {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker 28s linear infinite;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 28px; font-size: 12px; font-weight: 600; color: #111;
+}
+.ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(0,0,0,0.35); }
+
+/* ─── HEADER ─── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn 0.4s ease;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px; padding: 0 24px; max-width: 1140px; margin: 0 auto;
+}
+.logo {
+  font-family: var(--font-en); font-size: 22px; letter-spacing: 0.04em;
+  color: var(--text); display: flex; align-items: center; gap: 6px;
+}
+.logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.gnb { display: flex; align-items: center; gap: 4px; }
+.gnb-item {
+  position: relative; padding: 6px 12px; font-size: 13px; color: var(--text2);
+  border-radius: var(--radius-xs); transition: color 0.15s, background 0.15s; cursor: pointer;
+}
+.gnb-item:hover { color: var(--text); background: var(--bg3); }
+.gnb-dropdown {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); padding: 8px; min-width: 140px;
+  display: none; flex-direction: column; gap: 2px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.gnb-item:hover .gnb-dropdown { display: flex; animation: fadeUp 0.18s ease; }
+.gnb-drop-item {
+  padding: 8px 12px; font-size: 12px; color: var(--text2); border-radius: 6px;
+  transition: background 0.12s, color 0.12s;
+}
+.gnb-drop-item:hover { background: var(--bg3); color: var(--text); }
+.header-cta { display: flex; align-items: center; gap: 8px; }
+.cta-phone {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--radius-xs);
+  background: var(--accent); color: #111; font-size: 12px; font-weight: 600;
+  border: none; transition: background 0.15s;
+}
+.cta-phone:hover { background: var(--accent2); }
+.cta-kakao {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--radius-xs);
+  background: #FEE500; color: #3a1d1d; font-size: 12px; font-weight: 600;
+  border: none; transition: opacity 0.15s;
+}
+.cta-kakao:hover { opacity: 0.88; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative; min-height: 640px;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden; padding: 80px 0 60px;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-bg > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+.hero-grid-lines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0;
+  padding-left: 80px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,255,71,0.08); border: 1px solid rgba(232,255,71,0.2);
+  border-radius: 999px; padding: 5px 14px;
+  font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+.hero-title { text-align:left;
+  font-size: clamp(30px, 5vw, 54px); font-weight: 700; line-height: 1.2;
+  color: var(--text); margin-bottom: 14px;
+}
+.hero-title span { color: var(--accent); }
+.hero-sub {
+  font-size: 15px; color: var(--text2); margin-bottom: 32px; max-width: 480px;
+}
+.hero-checks {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
+}
+.hero-check {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: var(--text2);
+}
+.hero-check-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--green-bg); border: 1px solid var(--green);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-size: 11px; font-weight: 700; color: var(--green-txt); line-height: 1;
+}
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-search {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 13px;
+  display: flex; gap: 8px; align-items: center; max-width: 680px;
+}
+.search-select {
+  flex: 1; padding: 13px 12px; background: var(--bg3);
+  border: 1px solid var(--border2); border-radius: var(--radius-xs);
+  color: var(--text2); font-size: 11px; font-weight: 600; font-family: var(--font-ko);
+  appearance: none; cursor: pointer; transition: border-color 0.15s;
+}
+.search-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
+.search-btn {
+  padding: 10px 22px; background: var(--accent); color: #111;
+  font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius-xs);
+  transition: background 0.15s; white-space: nowrap;
+}
+.search-btn:hover { background: var(--accent2); }
+.hero-stats {
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-family: var(--font-en); font-size: 30px; color: var(--accent); line-height: 2;
+}
+.hero-stat-label { font-size: 12px; color: var(--text3); margin-top: 3px; }
+.hero-image-side {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 46%;
+  display: flex; align-items: center; justify-content: center; z-index: 1;
+}
+.hero-car-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(232,255,71,0.03) 0%, transparent 60%);
+  display: flex; align-items: center; justify-content: center;
+  border-left: 1px dashed rgba(255,255,255,0.06);
+}
+.hero-car-box {
+  width: 85%; height: 320px;
+  background: var(--bg2); border: 1px dashed #333; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  color: #444; font-size: 13px; letter-spacing: 0.05em;
+}
+
+/* ─── SECTION 1 — 차량탐색 ─── */
+.s1-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: start;
+}
+.type-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.type-pill {
+  padding: 9px 20px; border-radius: 999px; font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border2); background: var(--bg3); color: var(--text2);
+  transition: all 0.15s; cursor: pointer;
+}
+.type-pill.active, .type-pill:hover {
+  background: var(--accent); color: #111; border-color: var(--accent);
+}
+.price-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.price-pill {
+  padding: 8px 16px; border-radius: 999px; font-size: 12px;
+  border: 1px solid var(--border2); background: var(--bg3); color: var(--text2);
+  transition: all 0.15s; cursor: pointer;
+}
+.price-pill.active, .price-pill:hover {
+  background: var(--blue-bg); color: #7ec8ff; border-color: var(--blue);
+}
+.rec-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.rec-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 500;
+  background: var(--orange-bg); color: var(--orange); border: 1px solid #854F0B;
+}
+.s1-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.s1-search-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: var(--accent); color: #111; font-size: 14px; font-weight: 600;
+  border: none; margin-top: 8px; transition: background 0.15s;
+}
+.s1-search-btn:hover { background: var(--accent2); }
+.s1-trust { text-align: center; font-size: 12px; color: var(--text3); margin-top: 10px; }
+.s1-image-col {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.s1-img-top {
+  height: 200px; background: linear-gradient(135deg, #1a1a1a, #222);
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px dashed #2a2a2a; color: #444; font-size: 13px;
+}
+.s1-preview {
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
+}
+.s1-preview-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.s1-preview-img {
+  width: 54px; height: 40px; background: var(--bg4);
+  border-radius: 6px; border: 1px dashed #333; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 10px; color: #444;
+}
+.s1-preview-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.s1-preview-meta { font-size: 11px; color: var(--text2); }
+.s1-preview-price { font-size: 13px; font-weight: 600; color: var(--accent); margin-left: auto; }
+
+/* ─── SECTION 2 — 한도조회 ─── */
+.s2-wrap {
+  background: linear-gradient(135deg, var(--bg2) 0%, #0d1a0f 100%);
+  border: 1px solid #1a3a28; border-radius: 20px;
+  padding: 56px 48px; display: grid;
+  grid-template-columns: 1fr 380px; gap: 56px; align-items: center;
+}
+.s2-form-card {
+  background: var(--bg); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 28px;
+}
+.s2-form-title { font-size: 16px; font-weight: 600; margin-bottom: 20px; }
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%; padding: 11px 14px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-xs); color: var(--text);
+  font-size: 13px; font-family: var(--font-ko);
+  transition: border-color 0.15s;
+}
+.form-input:focus { outline: none; border-color: var(--green); }
+.form-input::placeholder { color: var(--text3); }
+.form-select {
+  width: 100%; padding: 11px 14px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-xs); color: var(--text2);
+  font-size: 13px; font-family: var(--font-ko);
+  appearance: none; cursor: pointer;
+}
+.limit-btn {
+  width: 100%; padding: 14px;
+  background: var(--green); color: #fff;
+  font-size: 14px; font-weight: 600; border: none;
+  border-radius: var(--radius-xs); margin-top: 6px;
+  transition: background 0.15s;
+}
+.limit-btn:hover { background: #18856a; }
+.s2-privacy { font-size: 11px; color: var(--text3); text-align: center; margin-top: 10px; }
+.s2-checks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.s2-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ─── SECTION 3 — 인기차량 ─── */
+.s3-tabs { display: flex; gap: 6px; margin-bottom: 28px; }
+.s3-tab {
+  padding: 8px 18px; border-radius: var(--radius-xs); font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border2); background: var(--bg3); color: var(--text2);
+  transition: all 0.15s; cursor: pointer;
+}
+.s3-tab.on { background: var(--text); color: #111; border-color: var(--text); }
+.car-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.car-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.car-card:hover { transform: translateY(-3px); border-color: var(--border2); }
+.car-img-area {
+  position: relative; height: 130px;
+  background: linear-gradient(135deg, var(--bg3), var(--bg4));
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+.car-img-text { font-size: 11px; color: #444; letter-spacing: 0.04em; }
+.car-badge-top {
+  position: absolute; top: 8px; left: 8px;
+  padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 600;
+}
+.car-rank {
+  position: absolute; top: 8px; right: 8px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,0.6); border: 1px solid #444;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--orange);
+}
+.car-body { padding: 14px 14px 12px; }
+.car-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.car-year { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+.car-price { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.car-metas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.car-meta {
+  font-size: 11px; color: var(--text3);
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 8px;
+}
+.car-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.car-tag {
+  font-size: 10px; color: var(--green-txt);
+  background: var(--green-bg); border: 1px solid var(--green);
+  border-radius: 4px; padding: 2px 7px;
+}
+.car-divider { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
+.car-actions { display: flex; gap: 6px; }
+.car-btn-main {
+  flex: 1; padding: 8px 0; background: var(--accent); color: #111;
+  font-size: 12px; font-weight: 600; border: none; border-radius: var(--radius-xs);
+  transition: background 0.15s;
+}
+.car-btn-main:hover { background: var(--accent2); }
+.car-btn-sub {
+  padding: 8px 12px; background: transparent; color: var(--text2);
+  font-size: 12px; border: 1px solid var(--border2); border-radius: var(--radius-xs);
+  transition: border-color 0.15s;
+}
+.car-btn-sub:hover { border-color: #555; color: var(--text); }
+.s3-footer {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.s3-trust { display: flex; gap: 8px; flex-wrap: wrap; }
+.viewall-btn {
+  padding: 11px 28px; background: transparent; color: var(--text2);
+  font-size: 13px; font-weight: 500; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); transition: border-color 0.15s, color 0.15s;
+}
+.viewall-btn:hover { border-color: #555; color: var(--text); }
+
+/* ─── SECTION 4 — 즉시출고 ─── */
+.s4-wrap {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 48px;
+}
+.s4-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+.quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.quick-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.quick-card:hover { transform: translateY(-2px); border-color: var(--green); }
+.quick-img {
+  height: 110px; background: linear-gradient(135deg, #111, #1a1a1a);
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--border); position: relative;
+}
+.quick-badge {
+  position: absolute; top: 8px; left: 8px;
+  padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 600;
+  background: var(--green-bg); color: var(--green-txt); border: 1px solid var(--green);
+}
+.quick-body { padding: 12px 14px; }
+.quick-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.quick-price { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+.quick-metas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.quick-meta {
+  font-size: 11px; color: var(--text3);
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 7px;
+}
+.quick-btn {
+  width: 100%; padding: 8px; background: var(--green-bg); color: var(--green-txt);
+  font-size: 12px; font-weight: 500; border: 1px solid var(--green);
+  border-radius: var(--radius-xs); transition: background 0.15s;
+}
+.quick-btn:hover { background: var(--green); color: #fff; }
+
+/* ─── SECTION 5 — 이용방법 ─── */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; }
+.steps-grid::before {
+  content: '';
+  position: absolute; top: 28px; left: calc(16.67% + 28px); right: calc(16.67% + 28px);
+  height: 1px; background: repeating-linear-gradient(90deg, var(--border2) 0, var(--border2) 6px, transparent 6px, transparent 14px);
+  z-index: 0;
+}
+.step-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px 24px;
+  position: relative; z-index: 1; transition: border-color 0.2s;
+}
+.step-card:hover { border-color: var(--accent); }
+.step-num {
+  font-family: var(--font-en); font-size: 42px; color: var(--accent);
+  line-height: 1; margin-bottom: 14px; opacity: 0.8;
+}
+.step-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 16px;
+}
+.step-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+/* ─── SECTION 6 — 후기 ─── */
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.review-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+  transition: border-color 0.2s;
+}
+.review-card:hover { border-color: var(--border2); }
+.review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.review-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--bg3); border: 1px dashed #444; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.review-meta-name { font-size: 13px; font-weight: 500; }
+.review-meta-date { font-size: 11px; color: var(--text3); }
+.review-stars { color: var(--orange); font-size: 13px; letter-spacing: 2px; margin-bottom: 10px; }
+.review-car { font-size: 12px; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+.review-photo {
+  width: 100%; height: 80px; background: var(--bg3);
+  border: 1px dashed #333; border-radius: 8px; margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #444;
+}
+.review-text { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.review-more {
+  text-align: center; margin-top: 24px;
+}
+
+/* ─── SECTION 7 — 상담 CTA ─── */
+.s7-wrap {
+  background: linear-gradient(135deg, var(--accent) 0%, #b8d420 100%);
+  border-radius: 20px; padding: 64px 56px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px;
+}
+.s7-title { font-size: clamp(22px, 3.5vw, 38px); font-weight: 700; color: #111; line-height: 1.25; }
+.s7-sub { font-size: 15px; color: rgba(0,0,0,0.6); margin-top: 8px; }
+.s7-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.s7-btn-phone {
+  display: flex; align-items: center; gap: 8px;
+  padding: 16px 28px; background: #111; color: #fff;
+  font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.s7-btn-phone:hover { background: #222; }
+.s7-btn-kakao {
+  display: flex; align-items: center; gap: 8px;
+  padding: 16px 28px; background: #FEE500; color: #3a1d1d;
+  font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm);
+  transition: opacity 0.15s;
+}
+.s7-btn-kakao:hover { opacity: 0.88; }
+
+/* ─── FLOATING CTA ─── */
+.float-cta {
+  position: fixed; right: 20px; bottom: 24px; z-index: 200;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.float-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 18px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.float-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.6); }
+.float-phone { background: var(--accent); color: #111; }
+.float-kakao { background: #FEE500; color: #3a1d1d; }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 56px 0 32px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 48px;
+}
+.footer-logo { font-family: var(--font-en); font-size: 24px; margin-bottom: 12px; }
+.footer-desc { font-size: 13px; color: var(--text3); line-height: 1.8; }
+.footer-col-title { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.06em; margin-bottom: 16px; }
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-link { font-size: 13px; color: var(--text3); transition: color 0.15s; }
+.footer-link:hover { color: var(--text2); }
+.footer-bottom {
+  border-top: 1px solid var(--border); padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-size: 12px; color: var(--text3); }
+.footer-info { font-size: 12px; color: var(--text3); line-height: 1.8; }
+.footer-sns { display: flex; gap: 8px; }
+.footer-sns-btn {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: border-color 0.15s;
+}
+.footer-sns-btn:hover { border-color: var(--border2); }
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .car-grid { grid-template-columns: repeat(2, 1fr); }
+  .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  .s1-grid { grid-template-columns: 1fr; gap: 32px; }
+  .s2-wrap { grid-template-columns: 1fr; }
+  .hero-image-side { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .gnb { display: none; }
+  .section { padding: 52px 0; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .steps-grid::before { display: none; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .s4-wrap { padding: 28px 20px; }
+  .s2-wrap { padding: 32px 24px; }
+  .s7-wrap { padding: 40px 28px; }
+  .car-grid { grid-template-columns: 1fr; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-search { flex-direction: column; }
+  .search-select { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item"><span class="ticker-dot"></span> 허위매물 0% 보장</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 누적 1,000건 이상 승인</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 딜러 수수료 없음</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 실제 승인 금리 안내</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 당일 출고 가능</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 무직자 금융 가능</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 신용 영향 없는 한도조회</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 허위매물 0% 보장</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 누적 1,000건 이상 승인</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 딜러 수수료 없음</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 실제 승인 금리 안내</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 당일 출고 가능</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 무직자 금융 가능</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 신용 영향 없는 한도조회</span>
+  </div>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-dot"></span>CARTRUST
+    </div>
+    <nav class="gnb">
+      <div class="gnb-item">홈</div>
+      <div class="gnb-item">내차찾기 ▾
+        <div class="gnb-dropdown">
+          <div class="gnb-drop-item">전체매물</div>
+          <div class="gnb-drop-item">인기차량</div>
+          <div class="gnb-drop-item">추천차량</div>
+        </div>
+      </div>
+      <div class="gnb-item">즉시출고 ▾
+        <div class="gnb-dropdown">
+          <div class="gnb-drop-item">당일출고 차량</div>
+          <div class="gnb-drop-item">재고 차량</div>
+        </div>
+      </div>
+      <div class="gnb-item">금융서비스 ▾
+        <div class="gnb-dropdown">
+          <div class="gnb-drop-item">한도조회</div>
+          <div class="gnb-drop-item">저금리 할부</div>
+          <div class="gnb-drop-item">무직자 가능</div>
+        </div>
+      </div>
+      <div class="gnb-item">고객센터 ▾
+        <div class="gnb-dropdown">
+          <div class="gnb-drop-item">이용후기</div>
+          <div class="gnb-drop-item">공지사항</div>
+          <div class="gnb-drop-item">FAQ</div>
+        </div>
+      </div>
+      <div class="gnb-item">문의하기</div>
+    </nav>
+    <div class="header-cta">
+      <button class="cta-phone">전화 상담</button>
+      <button class="cta-kakao">카톡 상담</button>
+    </div>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"><div style="width:100%; height:100%;" data-us-project="8pE7DHNrkhh3tkWuGVlu"></div></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-image-side">
+    <div class="hero-car-placeholder">
+      <div class="hero-car-box">차량 대표 이미지</div>
+    </div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-eyebrow fade-in">딜러 수수료 없는 중고차 플랫폼</div>
+    <h1 class="hero-title fade-up d1">
+      딜러 수수료 없이,<br>
+      <span>실제 승인 금리</span>로<br>
+      차량을 제공합니다
+    </h1>
+    <div class="hero-sub fade-up d2">내 조건에 맞는 차량을 1분 안에 찾아드립니다</div>
+    <div class="hero-checks fade-up d2">
+      <div class="hero-check"><div class="hero-check-dot">✓</div> 실제 승인 금리 기준 안내</div>
+      <div class="hero-check"><div class="hero-check-dot">✓</div> 누적 1,000건 이상 승인 데이터</div>
+      <div class="hero-check"><div class="hero-check-dot">✓</div> 허위매물 0% 보장</div>
+    </div>
+    <div class="hero-btns fade-up d3">
+      <button class="btn-primary">무료 한도조회</button>
+      <button class="btn-ghost">실매물 보러가기 →</button>
+    </div>
+    <div class="hero-search fade-up d4">
+      <select class="search-select"><option>브랜드 선택</option><option>현대</option><option>기아</option><option>쌍용</option><option>수입차</option></select>
+      <select class="search-select"><option>가격대 선택</option><option>500만원 이하</option><option>500~1,000만원</option><option>1,000~2,000만원</option><option>2,000만원 이상</option></select>
+      <select class="search-select"><option>연식 선택</option><option>2020년 이후</option><option>2018~2020년</option><option>2015~2018년</option><option>2015년 이전</option></select>
+      <select class="search-select"><option>연료 선택</option><option>가솔린</option><option>디젤</option><option>전기</option><option>하이브리드</option></select>
+      <button class="search-btn">검색</button>
+    </div>
+    <div class="hero-stats fade-up d5">
+      <div>
+        <div class="hero-stat-num">1,000+</div>
+        <div class="hero-stat-label">누적 승인 건수</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">0%</div>
+        <div class="hero-stat-label">허위매물 비율</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4.9★</div>
+        <div class="hero-stat-label">고객 만족도</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 1 — 차량탐색 ─── -->
+<section class="section">
+  <div class="container">
+    <div class="s1-grid">
+      <div>
+        <div class="sec-eyebrow">내차찾기</div>
+        <h2 class="sec-title">어떤 차량을<br>찾고 계신가요?</h2>
+        <p class="sec-sub">차종과 가격대를 선택하면 딱 맞는 차량을 추천해드려요</p>
+
+        <div class="s1-label">차종</div>
+        <div class="type-pills" id="type-group">
+          <div class="type-pill active" data-group="type">SUV</div>
+          <div class="type-pill" data-group="type">세단</div>
+          <div class="type-pill" data-group="type">경차</div>
+          <div class="type-pill" data-group="type">수입차</div>
+          <div class="type-pill" data-group="type">전기차</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="s1-label">가격대</div>
+        <div class="price-pills" id="price-group">
+          <div class="price-pill" data-group="price">500만원 이하</div>
+          <div class="price-pill active" data-group="price">500–1,000만원</div>
+          <div class="price-pill" data-group="price">1,000–2,000만원</div>
+          <div class="price-pill" data-group="price">2,000만원 이상</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="s1-label">지금 인기 추천</div>
+        <div class="rec-tags" style="margin-bottom:24px;">
+          <div class="rec-tag">아반떼</div>
+          <div class="rec-tag">K5</div>
+          <div class="rec-tag">그랜저</div>
+          <div class="rec-tag">투싼</div>
+        </div>
+
+        <button class="s1-search-btn">선택한 조건으로 차량 검색</button>
+        <div class="s1-trust">허위매물 0% · 누적 1,000건 이상 승인 데이터 기반</div>
+      </div>
+      <div class="s1-image-col">
+        <div class="s1-img-top">차량 필터 결과 프리뷰</div>
+        <div class="s1-preview">
+          <div class="s1-preview-card">
+            <div class="s1-preview-img">이미지</div>
+            <div style="flex:1">
+              <div class="s1-preview-name">현대 아반떼 AD</div>
+              <div class="s1-preview-meta">2020 · 4.8만km · 가솔린</div>
+            </div>
+            <div class="s1-preview-price">1,190만</div>
+          </div>
+          <div class="s1-preview-card">
+            <div class="s1-preview-img">이미지</div>
+            <div style="flex:1">
+              <div class="s1-preview-name">기아 K5 3세대</div>
+              <div class="s1-preview-meta">2021 · 3.2만km · 가솔린</div>
+            </div>
+            <div class="s1-preview-price">1,650만</div>
+          </div>
+          <div class="s1-preview-card">
+            <div class="s1-preview-img">이미지</div>
+            <div style="flex:1">
+              <div class="s1-preview-name">현대 그랜저 IG</div>
+              <div class="s1-preview-meta">2019 · 6.1만km · 가솔린</div>
+            </div>
+            <div class="s1-preview-price">2,100만</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 2 — 한도조회 ─── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="s2-wrap">
+      <div>
+        <div class="sec-eyebrow">금융서비스</div>
+        <h2 class="sec-title">내 한도 먼저<br>확인하세요</h2>
+        <p style="font-size:14px; color:var(--text2); margin-bottom:28px;">1분이면 충분해요 — 무료, 신용 영향 없음</p>
+        <div class="s2-checks">
+          <div class="check-row"><div class="check-dot">✓</div><span class="check-label">신용 낮아도 가능</span></div>
+          <div class="check-row"><div class="check-dot">✓</div><span class="check-label">무직자 가능</span></div>
+          <div class="check-row"><div class="check-dot">✓</div><span class="check-label">조회해도 신용 영향 없음</span></div>
+          <div class="check-row"><div class="check-dot">✓</div><span class="check-label">100% 무료</span></div>
+        </div>
+        <div class="s2-badges">
+          <div class="badge badge-green">✓ 누적 1,000건 승인</div>
+          <div class="badge badge-green">✓ 최저금리 안내</div>
+          <div class="badge badge-green">✓ 즉시 결과 확인</div>
+        </div>
+      </div>
+      <div class="s2-form-card">
+        <div class="s2-form-title">1분 무료 한도조회</div>
+        <div class="form-group">
+          <label class="form-label">이름</label>
+          <input class="form-input" type="text" placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처</label>
+          <input class="form-input" type="tel" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">직업</label>
+          <select class="form-select">
+            <option value="">직업을 선택하세요</option>
+            <option>직장인</option>
+            <option>자영업</option>
+            <option>무직</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <button class="limit-btn">무료 한도조회 신청</button>
+        <div class="s2-privacy">개인정보는 조회 목적으로만 사용됩니다</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 3 — 인기차량 ─── -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div class="sec-eyebrow">인기차량</div>
+        <h2 class="sec-title">지금 가장 많이 선택한 차량</h2>
+        <p class="sec-sub">20~30대가 가장 많이 구매한 인기 매물이에요</p>
+      </div>
+    </div>
+
+    <div class="s3-tabs">
+      <div class="s3-tab on" data-tab="popular">인기순</div>
+      <div class="s3-tab" data-tab="price">가격순</div>
+      <div class="s3-tab" data-tab="new">최신순</div>
+      <div class="s3-tab" data-tab="quick">즉시출고</div>
+    </div>
+
+    <div class="car-grid">
+      <!-- 카드 1 -->
+      <div class="car-card">
+        <div class="car-img-area">
+          <a href='https://ifh.cc/v-9Pgj6o' target='_blank'><img src='https://i.ifh.cc/9Pgj6o.png' border='0'></a>
+          <div class="car-badge-top badge badge-red">인기 1위</div>
+          <div class="car-rank">1</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">현대 아반떼 AD</div>
+          <div class="car-year">2020년형 · 가솔린 1.6</div>
+          <div class="car-price">1,190만원</div>
+          <div class="car-metas">
+            <span class="car-meta">2020년</span>
+            <span class="car-meta">4.8만km</span>
+            <span class="car-meta">가솔린</span>
+          </div>
+          <div class="car-tags">
+            <span class="car-tag">✓ 무사고</span>
+            <span class="car-tag">✓ 즉시출고</span>
+          </div>
+          <div class="car-divider"></div>
+          <div class="car-actions">
+            <button class="car-btn-main">한도조회</button>
+            <button class="car-btn-sub">상담</button>
+          </div>
+        </div>
+      </div>
+      <!-- 카드 2 -->
+      <div class="car-card">
+        <div class="car-img-area">
+          <a href='https://ifh.cc/v-gCLpho' target='_blank'><img src='https://i.ifh.cc/gCLpho.png' border='0'></a>
+          <div class="car-badge-top badge badge-red">인기 2위</div>
+          <div class="car-rank">2</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">기아 K5 3세대</div>
+          <div class="car-year">2021년형 · 가솔린 2.0</div>
+          <div class="car-price">1,650만원</div>
+          <div class="car-metas">
+            <span class="car-meta">2021년</span>
+            <span class="car-meta">3.2만km</span>
+            <span class="car-meta">가솔린</span>
+          </div>
+          <div class="car-tags">
+            <span class="car-tag">✓ 무사고</span>
+            <span class="car-tag">✓ 정비완료</span>
+          </div>
+          <div class="car-divider"></div>
+          <div class="car-actions">
+            <button class="car-btn-main">한도조회</button>
+            <button class="car-btn-sub">상담</button>
+          </div>
+        </div>
+      </div>
+      <!-- 카드 3 -->
+      <div class="car-card">
+        <div class="car-img-area">
+          <a href='https://ifh.cc/v-8wrt41' target='_blank'><img src='https://i.ifh.cc/8wrt41.png' border='0'></a>
+          <div class="car-badge-top badge badge-blue"> 신규등록</div>
+          <div class="car-rank" style="color:#aaa;">3</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">현대 그랜저 IG</div>
+          <div class="car-year">2019년형 · 가솔린 2.4</div>
+          <div class="car-price">2,100만원</div>
+          <div class="car-metas">
+            <span class="car-meta">2019년</span>
+            <span class="car-meta">6.1만km</span>
+            <span class="car-meta">가솔린</span>
+          </div>
+          <div class="car-tags">
+            <span class="car-tag">✓ 무사고</span>
+            <span class="car-tag">✓ 즉시출고</span>
+          </div>
+          <div class="car-divider"></div>
+          <div class="car-actions">
+            <button class="car-btn-main">한도조회</button>
+            <button class="car-btn-sub">상담</button>
+          </div>
+        </div>
+      </div>
+      <!-- 카드 4 -->
+      <div class="car-card">
+        <div class="car-img-area">
+          <a href='https://ifh.cc/v-l7yDPS' target='_blank'><img src='https://i.ifh.cc/l7yDPS.png' border='0'></a>
+          <div class="car-badge-top badge badge-green">당일출고</div>
+          <div class="car-rank" style="color:#aaa;">4</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">기아 스포티지 NQ5</div>
+          <div class="car-year">2022년형 · 가솔린 1.6T</div>
+          <div class="car-price">2,490만원</div>
+          <div class="car-metas">
+            <span class="car-meta">2022년</span>
+            <span class="car-meta">2.5만km</span>
+            <span class="car-meta">가솔린</span>
+          </div>
+          <div class="car-tags">
+            <span class="car-tag">✓ 무사고</span>
+            <span class="car-tag">✓ 당일출고</span>
+          </div>
+          <div class="car-divider"></div>
+          <div class="car-actions">
+            <button class="car-btn-main">한도조회</button>
+            <button class="car-btn-sub">상담</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s3-footer">
+      <div class="s3-trust">
+        <div class="badge badge-green">✓ 허위매물 0%</div>
+        <div class="badge badge-green">✓ 누적 1,000건+ 승인</div>
+        <div class="badge badge-green">✓ 실사진 100%</div>
+      </div>
+      <button class="viewall-btn">전체 매물 보기 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 4 — 즉시출고 ─── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="s4-wrap">
+      <div class="s4-header">
+        <div>
+          <div class="sec-eyebrow">즉시출고</div>
+          <h2 class="sec-title">오늘 바로 출고 가능</h2>
+          <p style="font-size:14px; color:var(--text2);">당일 출고 가능한 차량만 모았어요</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <div class="badge badge-green">✓ 당일 출고</div>
+          <div class="badge badge-accent">✓ 빠른 진행</div>
+        </div>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-card">
+          <div class="quick-img">
+            <span style="font-size:11px; color:#444;">차량 이미지</span>
+            <div class="quick-badge">당일출고</div>
+          </div>
+          <div class="quick-body">
+            <div class="quick-name">현대 투싼 NX4</div>
+            <div class="quick-price">2,290만원</div>
+            <div class="quick-metas">
+              <span class="quick-meta">2021년</span>
+              <span class="quick-meta">3.8만km</span>
+              <span class="quick-meta">가솔린</span>
+            </div>
+            <button class="quick-btn">상담 신청</button>
+          </div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-img">
+            <span style="font-size:11px; color:#444;">차량 이미지</span>
+            <div class="quick-badge">당일출고</div>
+          </div>
+          <div class="quick-body">
+            <div class="quick-name">기아 카니발 KA4</div>
+            <div class="quick-price">3,100만원</div>
+            <div class="quick-metas">
+              <span class="quick-meta">2022년</span>
+              <span class="quick-meta">2.1만km</span>
+              <span class="quick-meta">가솔린</span>
+            </div>
+            <button class="quick-btn">상담 신청</button>
+          </div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-img">
+            <span style="font-size:11px; color:#444;">차량 이미지</span>
+            <div class="quick-badge">당일출고</div>
+          </div>
+          <div class="quick-body">
+            <div class="quick-name">르노 SM6</div>
+            <div class="quick-price">1,380만원</div>
+            <div class="quick-metas">
+              <span class="quick-meta">2020년</span>
+              <span class="quick-meta">5.2만km</span>
+              <span class="quick-meta">가솔린</span>
+            </div>
+            <button class="quick-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 5 — 이용방법 ─── -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div class="sec-eyebrow" style="justify-content:center;">이용방법</div>
+      <h2 class="sec-title">3단계면 충분합니다</h2>
+      <p class="sec-sub">복잡한 절차 없이 간단하게 내 차를 찾아보세요</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">차량 검색</div>
+        <div class="step-desc">원하는 차종 · 가격 · 연식 조건으로 매물을 탐색하세요. 허위매물 없는 실매물만 제공합니다.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">상담 신청</div>
+        <div class="step-desc">전문 상담사와 1:1 맞춤 상담을 진행합니다. 금융 조건부터 차량 상태까지 꼼꼼하게 안내해드립니다.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">차량 인수</div>
+        <div class="step-desc">서류 완료 후 빠르게 차량을 전달해드립니다. 당일 출고 차량은 오늘 바로 받을 수 있어요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 6 — 후기 ─── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div class="sec-eyebrow">고객 후기</div>
+        <h2 class="sec-title"> 실제 구매 후기</h2>
+        <p class="sec-sub" style="margin-bottom:0;">직접 구매하신 고객분들의 생생한 후기예요</p>
+      </div>
+      <button class="viewall-btn">후기 더보기 →</button>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">😊</div>
+          <div>
+            <div class="review-meta-name">김*현</div>
+            <div class="review-meta-date">2025.03.12</div>
+          </div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-car">현대 아반떼 AD · 1,190만원</div>
+        <div class="review-photo">실사진</div>
+        <div class="review-text">처음에 반신반의했는데 정말 허위매물 없이 좋은 차 구매했어요. 상담사분도 친절하시고 빠르게 진행해주셔서 만족스럽습니다.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">😄</div>
+          <div>
+            <div class="review-meta-name">이*진</div>
+            <div class="review-meta-date">2025.02.28</div>
+          </div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-car">기아 K5 3세대 · 1,650만원</div>
+        <div class="review-photo">실사진</div>
+        <div class="review-text">금융 조건 때문에 걱정이 많았는데 무직자도 가능하다고 해서 문의했어요. 생각보다 훨씬 좋은 금리로 진행할 수 있었습니다!</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">🙂</div>
+          <div>
+            <div class="review-meta-name">박*우</div>
+            <div class="review-meta-date">2025.01.15</div>
+          </div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-car">현대 투싼 NX4 · 2,290만원</div>
+        <div class="review-photo">실사진</div>
+        <div class="review-text">당일 출고라 반신반의했는데 오전에 계약하고 오후에 차량 받았어요. 무사고 차량에 상태도 정말 좋았습니다. 강추해요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 7 — 상담 CTA ─── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="s7-wrap">
+      <div>
+        <h2 class="s7-title">지금 바로 상담<br>받아보세요</h2>
+        <div class="s7-sub">맞춤 추천 · 무료 상담 · 1분 한도조회</div>
+      </div>
+      <div class="s7-btns">
+        <button class="s7-btn-phone">전화 상담</button>
+        <button class="s7-btn-kakao">카톡 상담</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">CARTRUST<span style="color:var(--accent);">.</span></div>
+        <div class="footer-desc">딜러 수수료 없이 실제 승인 금리로<br>차량을 제공하는 중고차 플랫폼</div>
+        <div style="margin-top:16px; display:flex; gap:8px;">
+          <div class="badge badge-green">허위매물 0%</div>
+          <div class="badge badge-accent">누적 1,000건+</div>
+        </div>
+        <div class="footer-sns" style="margin-top:16px;">
+          <div class="footer-sns-btn">📘</div>
+          <div class="footer-sns-btn">📸</div>
+          <div class="footer-sns-btn">🐦</div>
+          <div class="footer-sns-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">서비스</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">전체매물</a>
+          <a class="footer-link" href="#">인기차량</a>
+          <a class="footer-link" href="#">즉시출고</a>
+          <a class="footer-link" href="#">한도조회</a>
+          <a class="footer-link" href="#">저금리 할부</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">고객센터</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">이용후기</a>
+          <a class="footer-link" href="#">공지사항</a>
+          <a class="footer-link" href="#">FAQ</a>
+          <a class="footer-link" href="#">문의하기</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">회사 정보</div>
+        <div class="footer-info">
+          경기 부천시 부천로 29번길 7<br>
+          12층 (심곡동)<br>
+          <br>
+          032-1234-1234<br>
+          평일 09:00 – 18:00
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">Copyright ⓒ 2026 CarTrust. All rights reserved.</div>
+      <div style="display:flex; gap:16px;">
+        <a class="footer-link" href="#">개인정보처리방침</a>
+        <a class="footer-link" href="#">이용약관</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── FLOATING CTA ─── -->
+<div class="float-cta">
+  <button class="float-btn float-phone">전화 상담</button>
+  <button class="float-btn float-kakao">카톡 상담</button>
+</div>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+  // 차종 필터 토글
+  document.querySelectorAll('.type-pill').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    });
+  });
+
+  // 가격대 필터 토글
+  document.querySelectorAll('.price-pill').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.price-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    });
+  });
+
+  // 인기차량 탭
+  document.querySelectorAll('.s3-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.car-card, .step-card, .review-card, .quick-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity 0.45s ease ${i * 0.07}s, transform 0.45s ease ${i * 0.07}s`;
+    observer.observe(el);
+  });
+
+  // Header scroll effect
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header.style.borderBottomColor = '#333';
+    } else {
+      header.style.borderBottomColor = 'var(--border)';
+    }
+  });
+</script>
+
+<script type="text/javascript">
+!function(){
+  var u=window.UnicornStudio;
+  if(u&&u.init){
+    if(document.readyState==="loading"){
+      document.addEventListener("DOMContentLoaded",function(){u.init()})
+    }else{u.init()}
+  }else{
+    window.UnicornStudio={isInitialized:!1};
+    var i=document.createElement("script");
+    i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.6/dist/unicornStudio.umd.js",
+    i.onload=function(){
+      if(document.readyState==="loading"){
+        document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})
+      }else{UnicornStudio.init()}
+    },
+    (document.head||document.body).appendChild(i)
+  }
+}();
+</script>
+
+</body>
+</html>
