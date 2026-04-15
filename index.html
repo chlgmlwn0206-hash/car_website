@@ -929,6 +929,25 @@ button { cursor: pointer; font-family: var(--font-ko); }
   }
 }
 
+@media (max-width: 768px) {
+  .hero {
+    overflow: visible !important; /* ← 이거 하나로 해결됨 */
+  }
+
+  .hero-image-side {
+    position: relative !important;
+    display: flex !important;
+    width: 100%;
+    margin-top: 40px;
+    justify-content: center;
+  }
+
+  .hero-car-visual {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
 .hero-image-side {
   z-index: 5;
 }
@@ -1020,7 +1039,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-  <div style="position:absolute; inset:0; z-index:0;">
+  <div style="position:absolute; inset:0; z-index:0; pointer-events:none;">
   <div style="width:100%; height:100%" data-us-project="8pE7DHNrkhh3tkWuGVlu"></div>
 </div>
 
