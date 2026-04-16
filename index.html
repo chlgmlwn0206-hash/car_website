@@ -1008,7 +1008,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
       <div class="gnb-item" onclick="scrollToSection('s1')">내차찾기</div>
       <div class="gnb-item" onclick="scrollToSection('s4')">즉시출고</div>
       <div class="gnb-item" onclick="scrollToSection('s2')">금융서비스</div>
-      <div class="gnb-item" onclick="scrollToSection('s6')">고객센터</div>
+      <div class="gnb-item" onclick="scrollToSection('s6')">이용후기</div>
       <div class="gnb-item" onclick="scrollToSection('s7')">문의하기</div>
     </nav>
     <div class="header-cta">
@@ -1950,7 +1950,10 @@ function editReview(index) {
   }
   function scrollToSection(id) {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el) return;
+    const headerH = document.getElementById('header')?.offsetHeight || 60;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerH - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 
   // ─── 모바일 메뉴 ───
@@ -2287,6 +2290,7 @@ function editReview(index) {
   function handleS1Search() {
     const btn = document.querySelector('.s1-search-btn');
     btn.textContent = '검색 중...';
+    btn.disabled = true;
 
     const priceKey = PRICE_KEY_MAP[selectedPrice] || null;
     const typeData = WIDGET_DB[selectedType];
@@ -2294,6 +2298,7 @@ function editReview(index) {
 
     setTimeout(() => {
       btn.textContent = '선택한 조건으로 차량 검색';
+      btn.disabled = false;
 
       if (cars && cars.length > 0) {
         // 필터 활성화
@@ -2312,13 +2317,24 @@ function editReview(index) {
         document.getElementById('s3Title').textContent = `${selectedType} · ${priceKey || selectedPrice} 추천 차량`;
         document.getElementById('s3Sub').textContent = '내차 찾기에서 선택하신 조건에 맞는 매물이에요';
 
-        // 인기순 탭 선택 후 필터된 카드 렌더링
+        // 탭 상태 초기화
         document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
-        document.querySelector('.s3-tab[data-tab="popular"]').classList.add('on');
+        const popularTab = document.querySelector('.s3-tab[data-tab="popular"]');
+        if (popularTab) popularTab.classList.add('on');
+
+        // 카드 렌더링
         renderS3Cards(cars);
+      } else {
+        // 조건에 맞는 차량 없을 때 필터 초기화
+        resetS3Filter();
       }
 
-      scrollToSection('s3');
+      // 렌더링 완료 후 스크롤 (rAF로 DOM 업데이트 보장)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToSection('s3');
+        });
+      });
     }, 700);
   }
 
