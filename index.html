@@ -188,11 +188,11 @@ button { cursor: pointer; font-family: var(--font-ko); }
   color: var(--text); display: flex; align-items: center; gap: 6px; cursor: pointer;
 }
 .logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
-.gnb { display: flex; align-items: center; gap: 4px; }
+.gnb { display: flex; align-items: center; gap: 0; }
 .gnb-item {
-  position: relative; padding: 6px 12px; font-size: 13px; color: var(--text2);
+  position: relative; padding: 6px 14px; font-size: 13px; color: var(--text2);
   border-radius: var(--radius-xs); transition: color 0.15s, background 0.15s; cursor: pointer;
-  user-select: none;
+  user-select: none; white-space: nowrap;
 }
 .gnb-item:hover { color: var(--text); background: var(--bg3); }
 .gnb-dropdown {
@@ -1004,33 +1004,10 @@ button { cursor: pointer; font-family: var(--font-ko); }
     </div>
     <nav class="gnb">
       <div class="gnb-item" onclick="scrollToTop()">홈</div>
-      <div class="gnb-item">내차찾기 ▾
-        <div class="gnb-dropdown">
-          <div class="gnb-drop-item" onclick="scrollToSection('s1')">전체매물</div>
-          <div class="gnb-drop-item" onclick="scrollToSection('s3')">인기차량</div>
-          <div class="gnb-drop-item" onclick="scrollToSection('s1')">추천차량</div>
-        </div>
-      </div>
-      <div class="gnb-item">즉시출고 ▾
-        <div class="gnb-dropdown">
-          <div class="gnb-drop-item" onclick="scrollToSection('s4')">당일출고 차량</div>
-          <div class="gnb-drop-item" onclick="scrollToSection('s4')">재고 차량</div>
-        </div>
-      </div>
-      <div class="gnb-item">금융서비스 ▾
-        <div class="gnb-dropdown">
-          <div class="gnb-drop-item" onclick="scrollToSection('s2')">한도조회</div>
-          <div class="gnb-drop-item" onclick="scrollToSection('s2')">저금리 할부</div>
-          <div class="gnb-drop-item" onclick="scrollToSection('s2')">무직자 가능</div>
-        </div>
-      </div>
-      <div class="gnb-item">고객센터 ▾
-        <div class="gnb-dropdown">
-          <div class="gnb-drop-item" onclick="scrollToSection('s6')">이용후기</div>
-          <div class="gnb-drop-item">공지사항</div>
-          <div class="gnb-drop-item">FAQ</div>
-        </div>
-      </div>
+      <div class="gnb-item" onclick="scrollToSection('s1')">내차찾기</div>
+      <div class="gnb-item" onclick="scrollToSection('s4')">즉시출고</div>
+      <div class="gnb-item" onclick="scrollToSection('s2')">금융서비스</div>
+      <div class="gnb-item" onclick="scrollToSection('s6')">고객센터</div>
       <div class="gnb-item" onclick="scrollToSection('s7')">문의하기</div>
     </nav>
     <div class="header-cta">
@@ -1123,27 +1100,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
       <button class="btn-primary" onclick="scrollToSection('s2')">무료 한도조회</button>
       <button class="btn-ghost" onclick="scrollToSection('s3')">실매물 보러가기 →</button>
     </div>
-    <div class="hero-search fade-up d4">
-      <select class="search-select" id="h-brand">
-        <option value="">브랜드 선택</option>
-        <option>현대</option><option>기아</option><option>쌍용</option><option>르노</option><option>수입차</option>
-      </select>
-      <select class="search-select" id="h-price">
-        <option value="">가격대 선택</option>
-        <option>500만원 이하</option><option>500~1,000만원</option>
-        <option>1,000~2,000만원</option><option>2,000만원 이상</option>
-      </select>
-      <select class="search-select" id="h-year">
-        <option value="">연식 선택</option>
-        <option>2020년 이후</option><option>2018~2020년</option>
-        <option>2015~2018년</option><option>2015년 이전</option>
-      </select>
-      <select class="search-select" id="h-fuel">
-        <option value="">연료 선택</option>
-        <option>가솔린</option><option>디젤</option><option>전기</option><option>하이브리드</option>
-      </select>
-      <button class="search-btn" onclick="handleHeroSearch()">바로가기</button>
-    </div>
+
     <div class="hero-stats fade-up d5">
       <div><div class="hero-stat-num">1,000+</div><div class="hero-stat-label">누적 승인 건수</div></div>
       <div><div class="hero-stat-num">0%</div><div class="hero-stat-label">허위매물 비율</div></div>
@@ -1303,25 +1260,25 @@ button { cursor: pointer; font-family: var(--font-ko); }
     <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:12px;">
       <div>
         <div class="sec-eyebrow">인기차량</div>
-        <h2 class="sec-title">지금 가장 많이 선택한 차량</h2>
-        <p class="sec-sub">20~30대가 가장 많이 구매한 인기 매물이에요</p>
+        <h2 class="sec-title" id="s3Title">지금 가장 많이 선택한 차량</h2>
+        <p class="sec-sub" id="s3Sub">20~30대가 가장 많이 구매한 인기 매물이에요</p>
       </div>
     </div>
 
-    <div class="s3-tabs">
-      <div class="s3-tab on" data-tab="popular" onclick="selectTab(this)">인기순</div>
-      <div class="s3-tab" data-tab="price" onclick="selectTab(this)">가격순</div>
-      <div class="s3-tab" data-tab="new" onclick="selectTab(this)">최신순</div>
-      <div class="s3-tab" data-tab="quick" onclick="selectTab(this)">즉시출고</div>
+    <!-- 검색 필터 배너 (검색 시 표시) -->
+    <div id="s3FilterBanner" style="display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:rgba(232,255,71,0.06); border:1px solid rgba(232,255,71,0.2); border-radius:10px; padding:12px 16px; margin-bottom:20px; animation:fadeIn 0.3s ease;">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span style="font-size:12px; color:var(--text2);">검색 조건</span>
+        <span id="s3FilterType" style="padding:3px 12px; border-radius:999px; font-size:12px; font-weight:600; background:var(--accent); color:#111;"></span>
+        <span id="s3FilterPrice" style="padding:3px 12px; border-radius:999px; font-size:12px; font-weight:600; background:var(--blue-bg); color:#7ec8ff; border:1px solid var(--blue);"></span>
+        <span id="s3FilterCount" style="font-size:12px; color:var(--text2);"></span>
+      </div>
+      <button onclick="resetS3Filter()" style="font-size:12px; color:var(--text3); background:transparent; border:1px solid var(--border2); border-radius:6px; padding:4px 12px; transition:color 0.15s, border-color 0.15s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='#555'" onmouseout="this.style.color='var(--text3)';this.style.borderColor='var(--border2)'">✕ 필터 초기화</button>
     </div>
+
 
     <div class="car-grid" id="carGrid">
       <div class="car-card">
-        <div class="car-img" style="position:relative;">
-          <img src="https://i.ifh.cc/PfmKy3.png" alt="아반떼" onerror="this.parentElement.innerHTML='#'">
-          <div class="car-badge-top badge badge-red">인기 1위</div>
-          <div class="car-rank">1</div>
-        </div>
         <div class="car-body">
           <div class="car-name">현대 아반떼 AD</div>
           <div class="car-year">2020년형 · 가솔린 1.6</div>
@@ -1336,11 +1293,6 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
       </div>
       <div class="car-card">
-        <div class="car-img" style="position:relative;">
-          <img src="https://i.ifh.cc/gCLpho.png" alt="K5" onerror="this.parentElement.innerHTML='🚙'">
-          <div class="car-badge-top badge badge-red">인기 2위</div>
-          <div class="car-rank" style="color:#aaa;">2</div>
-        </div>
         <div class="car-body">
           <div class="car-name">기아 K5 3세대</div>
           <div class="car-year">2021년형 · 가솔린 2.0</div>
@@ -1355,11 +1307,6 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
       </div>
       <div class="car-card">
-        <div class="car-img" style="position:relative;">
-          <img src="https://i.ifh.cc/8wrt41.png" alt="그랜저" onerror="this.parentElement.innerHTML='🚘'">
-          <div class="car-badge-top badge badge-blue">신규등록</div>
-          <div class="car-rank" style="color:#aaa;">3</div>
-        </div>
         <div class="car-body">
           <div class="car-name">현대 그랜저 IG</div>
           <div class="car-year">2019년형 · 가솔린 2.4</div>
@@ -1374,11 +1321,6 @@ button { cursor: pointer; font-family: var(--font-ko); }
         </div>
       </div>
       <div class="car-card">
-        <div class="car-img" style="position:relative;">
-          <img src="https://i.ifh.cc/l7yDPS.png" alt="스포티지" onerror="this.parentElement.innerHTML='🚐'">
-          <div class="car-badge-top badge badge-green">당일출고</div>
-          <div class="car-rank" style="color:#aaa;">4</div>
-        </div>
         <div class="car-body">
           <div class="car-name">기아 스포티지 NQ5</div>
           <div class="car-year">2022년형 · 가솔린 1.6T</div>
@@ -1400,7 +1342,7 @@ button { cursor: pointer; font-family: var(--font-ko); }
         <div class="badge badge-green">✓ 누적 1,000건+ 승인</div>
         <div class="badge badge-green">✓ 실사진 100%</div>
       </div>
-      <button class="viewall-btn" onclick="alert('전체 매물 68건을 준비했어요!\n담당자에게 문의해 주세요.')">전체 매물 보기 →</button>
+      <button class="viewall-btn" onclick="openAllCarsModal()">전체 매물 보기 →</button>
     </div>
   </div>
 </section>
@@ -1579,6 +1521,60 @@ button { cursor: pointer; font-family: var(--font-ko); }
     </div>
   </div>
 </section>
+<!-- ─── 전체 매물 모달 ─── -->
+<div class="modal-overlay" id="allCarsModal" onclick="closeAllCarsModal(event)">
+  <div class="modal-card" style="max-width:1000px;width:100%;padding:28px 28px 20px;">
+    <button class="modal-close" onclick="document.getElementById('allCarsModal').classList.remove('open')">✕</button>
+    <div class="modal-title" style="margin-bottom:4px;">전체 매물 보기</div>
+    <div class="modal-sub" style="margin-bottom:16px;">총 <span id="allCarsTotal" style="color:var(--accent);font-weight:600;">80</span>건의 매물이 있어요</div>
+
+    <!-- 필터 -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+      <span style="font-size:11px;color:var(--text3);align-self:center;">차종</span>
+      <button class="ac-type-btn active" onclick="acSelectType(this,'전체')">전체</button>
+      <button class="ac-type-btn" onclick="acSelectType(this,'SUV')">SUV</button>
+      <button class="ac-type-btn" onclick="acSelectType(this,'세단')">세단</button>
+      <button class="ac-type-btn" onclick="acSelectType(this,'경차')">경차</button>
+      <button class="ac-type-btn" onclick="acSelectType(this,'수입차')">수입차</button>
+      <button class="ac-type-btn" onclick="acSelectType(this,'전기차')">전기차</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      <span style="font-size:11px;color:var(--text3);align-self:center;">가격대</span>
+      <button class="ac-price-btn active" onclick="acSelectPrice(this,'전체')">전체</button>
+      <button class="ac-price-btn" onclick="acSelectPrice(this,'500만원 이하')">500만원 이하</button>
+      <button class="ac-price-btn" onclick="acSelectPrice(this,'500-1,000만원')">500-1,000만원</button>
+      <button class="ac-price-btn" onclick="acSelectPrice(this,'1,000-2,000만원')">1,000-2,000만원</button>
+      <button class="ac-price-btn" onclick="acSelectPrice(this,'2,000만원 이상')">2,000만원 이상</button>
+    </div>
+
+    <div id="allCarsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-height:60vh;overflow-y:auto;padding-right:4px;"></div>
+  </div>
+</div>
+
+<style>
+.ac-type-btn, .ac-price-btn {
+  padding:5px 14px;border-radius:999px;font-size:12px;font-weight:500;
+  border:1px solid var(--border2);background:var(--bg3);color:var(--text2);
+  cursor:pointer;transition:all .15s;font-family:var(--font-ko);
+}
+.ac-type-btn.active  { background:var(--accent);color:#111;border-color:var(--accent); }
+.ac-price-btn.active { background:var(--blue-bg);color:#7ec8ff;border-color:var(--blue); }
+.ac-type-btn:hover:not(.active),.ac-price-btn:hover:not(.active) { border-color:#555;color:var(--text); }
+.ac-car-card {
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;transition:transform .18s,border-color .18s;
+}
+.ac-car-card:hover { transform:translateY(-2px);border-color:#3a3a3a; }
+.ac-car-card img { width:100%;height:90px;object-fit:cover;display:block;background:var(--bg4); }
+.ac-car-body { padding:10px 10px 10px; }
+.ac-type-label { font-size:10px;padding:2px 7px;border-radius:999px;display:inline-block;margin-bottom:5px;font-weight:600; }
+.ac-car-name { font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px; }
+.ac-car-year { font-size:11px;color:var(--text2);margin-bottom:4px; }
+.ac-car-price { font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px; }
+.ac-car-tags { display:flex;gap:4px;flex-wrap:wrap; }
+.ac-car-tag { font-size:10px;padding:2px 6px;border-radius:4px; }
+</style>
+
 <!-- ─── 후기 작성 모달 ─── -->
 <div class="modal-overlay" id="reviewWriteModal" onclick="closeReviewWriteModal(event)">
   <div class="modal-card" style="max-width:520px;">
@@ -1977,6 +1973,280 @@ function editReview(index) {
     }
   }
 
+  // ─── 위젯 차량 데이터베이스 (차종 × 가격대 × 4대) ───
+  const WIDGET_DB = {
+    'SUV': {
+      '500만원 이하': [
+        { name:'현대 투싼 (구형)', year:'2011년형', price:'350만원', km:'11.2만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/2010_Hyundai_Tucson_%28JM%29_Elite_wagon_%282010-11-11%29.jpg/320px-2010_Hyundai_Tucson_%28JM%29_Elite_wagon_%282010-11-11%29.jpg' },
+        { name:'기아 스포티지 R', year:'2012년형', price:'400만원', km:'10.5만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Kia_Sportage_SL_001.JPG/320px-Kia_Sportage_SL_001.JPG' },
+        { name:'르노 QM5', year:'2010년형', price:'280만원', km:'13.0만km', fuel:'디젤', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Renault_Samsung_QM5_01.jpg/320px-Renault_Samsung_QM5_01.jpg' },
+        { name:'현대 싼타페 CM', year:'2010년형', price:'320만원', km:'12.8만km', fuel:'디젤', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Hyundai_Santa_Fe_CM_%282009%29.jpg/320px-Hyundai_Santa_Fe_CM_%282009%29.jpg' },
+      ],
+      '500-1,000만원': [
+        { name:'현대 투싼 ix35', year:'2014년형', price:'720만원', km:'7.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Hyundai_Tucson_ix35_%28LM%29_facelift%2C_front_8.21.13.jpg/320px-Hyundai_Tucson_ix35_%28LM%29_facelift%2C_front_8.21.13.jpg' },
+        { name:'기아 스포티지 3세대', year:'2014년형', price:'780만원', km:'7.2만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kia_Sportage_SL_facelift_01.jpg/320px-Kia_Sportage_SL_facelift_01.jpg' },
+        { name:'현대 싼타페 DM', year:'2015년형', price:'890만원', km:'8.1만km', fuel:'디젤', tags:['정비완료'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hyundai_Santa_Fe_DM_front.jpg/320px-Hyundai_Santa_Fe_DM_front.jpg' },
+        { name:'쌍용 코란도 C', year:'2015년형', price:'650만원', km:'9.3만km', fuel:'디젤', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/SsangYong_Korando_C_01.jpg/320px-SsangYong_Korando_C_01.jpg' },
+      ],
+      '1,000-2,000만원': [
+        { name:'현대 투싼 5세대', year:'2019년형', price:'1,450만원', km:'4.9만km', fuel:'터보', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/2019_Hyundai_Tucson_%28TL_facelift%29_2.0_GDi_2WD_%28China%29%2C_front_8.21.19.jpg/320px-2019_Hyundai_Tucson_%28TL_facelift%29_2.0_GDi_2WD_%28China%29%2C_front_8.21.19.jpg' },
+        { name:'기아 스포티지 QL', year:'2019년형', price:'1,380만원', km:'5.5만km', fuel:'디젤', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kia_Sportage_QL_facelift_01.jpg/320px-Kia_Sportage_QL_facelift_01.jpg' },
+        { name:'르노 QM6', year:'2018년형', price:'1,100만원', km:'6.2만km', fuel:'LPe', tags:['정비완료'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Renault_Samsung_QM6_01.jpg/320px-Renault_Samsung_QM6_01.jpg' },
+        { name:'르노 XM3', year:'2020년형', price:'1,200만원', km:'5.0만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Renault_Samsung_XM3_01.jpg/320px-Renault_Samsung_XM3_01.jpg' },
+      ],
+      '2,000만원 이상': [
+        { name:'현대 팰리세이드', year:'2022년형', price:'3,200만원', km:'2.8만km', fuel:'디젤', tags:['무사고','당일출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/2022_Hyundai_Palisade_%28LX2%29_Calligraphy_facelift%2C_front_9.28.22.jpg/320px-2022_Hyundai_Palisade_%28LX2%29_Calligraphy_facelift%2C_front_9.28.22.jpg' },
+        { name:'기아 쏘렌토 MQ4', year:'2022년형', price:'2,800만원', km:'3.1만km', fuel:'하이브리드', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kia_Sorento_MQ4_HEV_01.jpg/320px-Kia_Sorento_MQ4_HEV_01.jpg' },
+        { name:'제네시스 GV70', year:'2022년형', price:'3,800만원', km:'2.2만km', fuel:'가솔린 터보', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/2022_Genesis_GV70_2.5T_AWD_%28US%29%2C_front_9.9.22.jpg/320px-2022_Genesis_GV70_2.5T_AWD_%28US%29%2C_front_9.9.22.jpg' },
+        { name:'기아 스포티지 NQ5', year:'2022년형', price:'2,490만원', km:'2.5만km', fuel:'가솔린 터보', tags:['무사고','당일출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Kia_Sportage_NQ5_01.jpg/320px-Kia_Sportage_NQ5_01.jpg' },
+      ],
+    },
+    '세단': {
+      '500만원 이하': [
+        { name:'현대 아반떼 MD', year:'2012년형', price:'280만원', km:'12.0만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Hyundai_Avante_MD_%282010%29.jpg/320px-Hyundai_Avante_MD_%282010%29.jpg' },
+        { name:'기아 K3 1세대', year:'2014년형', price:'350만원', km:'10.2만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Kia_Cerato_YD_01.jpg/320px-Kia_Cerato_YD_01.jpg' },
+        { name:'르노 SM5 3세대', year:'2013년형', price:'300만원', km:'11.5만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Renault_Samsung_SM5_Nova.jpg/320px-Renault_Samsung_SM5_Nova.jpg' },
+        { name:'쉐보레 말리부', year:'2013년형', price:'320만원', km:'11.8만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Chevrolet_Malibu_2013.jpg/320px-Chevrolet_Malibu_2013.jpg' },
+      ],
+      '500-1,000만원': [
+        { name:'현대 아반떼 AD', year:'2017년형', price:'850만원', km:'6.5만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Hyundai_Avante_AD_%282015%29_front.jpg/320px-Hyundai_Avante_AD_%282015%29_front.jpg' },
+        { name:'기아 K5 2세대', year:'2017년형', price:'920만원', km:'6.8만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kia_K5_JF_%282016%29.jpg/320px-Kia_K5_JF_%282016%29.jpg' },
+        { name:'현대 쏘나타 LF', year:'2016년형', price:'780만원', km:'7.9만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Hyundai_Sonata_LF_front.jpg/320px-Hyundai_Sonata_LF_front.jpg' },
+        { name:'쉐보레 크루즈', year:'2016년형', price:'680만원', km:'8.2만km', fuel:'터보', tags:['정비완료'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chevrolet_Cruze_2016_facelift.jpg/320px-Chevrolet_Cruze_2016_facelift.jpg' },
+      ],
+      '1,000-2,000만원': [
+        { name:'현대 아반떼 CN7', year:'2021년형', price:'1,480만원', km:'3.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/2021_Hyundai_Avante_CN7_N_Line_%28KR%29_front.jpg/320px-2021_Hyundai_Avante_CN7_N_Line_%28KR%29_front.jpg' },
+        { name:'기아 K5 3세대', year:'2021년형', price:'1,650만원', km:'3.2만km', fuel:'가솔린', tags:['무사고','정비완료'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Kia_K5_DL3_01.jpg/320px-Kia_K5_DL3_01.jpg' },
+        { name:'현대 그랜저 IG', year:'2019년형', price:'2,100만원', km:'6.1만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/2019_Hyundai_Grandeur_IG_facelift%2C_front_11.11.19.jpg/320px-2019_Hyundai_Grandeur_IG_facelift%2C_front_11.11.19.jpg' },
+        { name:'르노 SM6', year:'2020년형', price:'1,200만원', km:'5.2만km', fuel:'터보', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Renault_Samsung_SM6_01.jpg/320px-Renault_Samsung_SM6_01.jpg' },
+      ],
+      '2,000만원 이상': [
+        { name:'현대 그랜저 GN7', year:'2023년형', price:'3,500만원', km:'1.5만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/2023_Hyundai_Grandeur_GN7_2.5_GDi_Calligraphy_%28KR%29_front.jpg/320px-2023_Hyundai_Grandeur_GN7_2.5_GDi_Calligraphy_%28KR%29_front.jpg' },
+        { name:'기아 K8', year:'2022년형', price:'2,800만원', km:'2.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Kia_K8_GL3_01.jpg/320px-Kia_K8_GL3_01.jpg' },
+        { name:'제네시스 G80 3세대', year:'2021년형', price:'4,200만원', km:'2.0만km', fuel:'가솔린 터보', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2021_Genesis_G80_2.5T_%28US%29%2C_front_9.24.20.jpg/320px-2021_Genesis_G80_2.5T_%28US%29%2C_front_9.24.20.jpg' },
+        { name:'기아 스팅어', year:'2022년형', price:'2,500만원', km:'3.5만km', fuel:'터보', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Kia_Stinger_CK_facelift_01.jpg/320px-Kia_Stinger_CK_facelift_01.jpg' },
+      ],
+    },
+    '경차': {
+      '500만원 이하': [
+        { name:'쉐보레 마티즈 크리에이티브', year:'2011년형', price:'180만원', km:'9.8만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Chevrolet_Spark_M300_01.jpg/320px-Chevrolet_Spark_M300_01.jpg' },
+        { name:'기아 레이 초기형', year:'2013년형', price:'380만원', km:'8.5만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kia_Ray_%28DS%29_01.jpg/320px-Kia_Ray_%28DS%29_01.jpg' },
+        { name:'기아 모닝 2세대', year:'2014년형', price:'280만원', km:'9.2만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Kia_Morning_%28TA%29_01.jpg/320px-Kia_Morning_%28TA%29_01.jpg' },
+        { name:'쉐보레 스파크 구형', year:'2014년형', price:'320만원', km:'8.8만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Chevrolet_Spark_M300_facelift_01.jpg/320px-Chevrolet_Spark_M300_facelift_01.jpg' },
+      ],
+      '500-1,000만원': [
+        { name:'기아 모닝 3세대', year:'2018년형', price:'680만원', km:'4.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Kia_Morning_%28JA%29_01.jpg/320px-Kia_Morning_%28JA%29_01.jpg' },
+        { name:'쉐보레 스파크 신형', year:'2018년형', price:'620만원', km:'5.2만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Chevrolet_Spark_M400_01.jpg/320px-Chevrolet_Spark_M400_01.jpg' },
+        { name:'기아 레이 2세대', year:'2018년형', price:'780만원', km:'4.5만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kia_Ray_%28DS%29_01.jpg/320px-Kia_Ray_%28DS%29_01.jpg' },
+        { name:'현대 캐스퍼 초기형', year:'2021년형', price:'950만원', km:'2.9만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hyundai_Casper_AX1_01.jpg/320px-Hyundai_Casper_AX1_01.jpg' },
+      ],
+      '1,000-2,000만원': [
+        { name:'현대 캐스퍼 최신형', year:'2023년형', price:'1,350만원', km:'1.8만km', fuel:'터보', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hyundai_Casper_AX1_01.jpg/320px-Hyundai_Casper_AX1_01.jpg' },
+        { name:'기아 모닝 4세대', year:'2022년형', price:'1,150만원', km:'2.2만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Kia_Morning_%28JA%29_01.jpg/320px-Kia_Morning_%28JA%29_01.jpg' },
+        { name:'쉐보레 스파크 EV', year:'2019년형', price:'980만원', km:'4.0만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Chevrolet_Spark_M400_01.jpg/320px-Chevrolet_Spark_M400_01.jpg' },
+        { name:'기아 레이 EV', year:'2023년형', price:'1,500만원', km:'1.5만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kia_Ray_%28DS%29_01.jpg/320px-Kia_Ray_%28DS%29_01.jpg' },
+      ],
+      '2,000만원 이상': [
+        { name:'현대 캐스퍼 일렉트릭', year:'2024년형', price:'2,800만원', km:'0.5만km', fuel:'전기', tags:['신규등록'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hyundai_Casper_AX1_01.jpg/320px-Hyundai_Casper_AX1_01.jpg' },
+        { name:'기아 레이 EV 풀옵션', year:'2024년형', price:'2,200만원', km:'0.8만km', fuel:'전기', tags:['신규등록'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kia_Ray_%28DS%29_01.jpg/320px-Kia_Ray_%28DS%29_01.jpg' },
+        { name:'기아 모닝 풀옵션', year:'2024년형', price:'2,000만원', km:'0.3만km', fuel:'가솔린', tags:['신규등록','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Kia_Morning_%28JA%29_01.jpg/320px-Kia_Morning_%28JA%29_01.jpg' },
+        { name:'현대 캐스퍼 터보', year:'2024년형', price:'2,400만원', km:'0.6만km', fuel:'터보', tags:['신규등록'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hyundai_Casper_AX1_01.jpg/320px-Hyundai_Casper_AX1_01.jpg' },
+      ],
+    },
+    '수입차': {
+      '500만원 이하': [
+        { name:'BMW 3시리즈 E90', year:'2009년형', price:'380만원', km:'12.5만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/BMW_E90_front_20080331.jpg/320px-BMW_E90_front_20080331.jpg' },
+        { name:'폭스바겐 골프 6', year:'2011년형', price:'420만원', km:'11.8만km', fuel:'디젤', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/VW_Golf_VI_%28cropped%29.jpg/320px-VW_Golf_VI_%28cropped%29.jpg' },
+        { name:'아우디 A4 B8', year:'2010년형', price:'460만원', km:'12.2만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Audi_A4_B8_Facelift_front_20100918.jpg/320px-Audi_A4_B8_Facelift_front_20100918.jpg' },
+        { name:'벤츠 C클래스 W204', year:'2010년형', price:'490만원', km:'11.0만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mercedes-Benz_C-Class_%28W204%29.jpg/320px-Mercedes-Benz_C-Class_%28W204%29.jpg' },
+      ],
+      '500-1,000만원': [
+        { name:'BMW 3시리즈 F30', year:'2014년형', price:'820만원', km:'7.5만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/BMW_F30_3-series_China.jpg/320px-BMW_F30_3-series_China.jpg' },
+        { name:'폭스바겐 티구안', year:'2014년형', price:'880만원', km:'8.0만km', fuel:'디젤', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/VW_Tiguan_5N_facelift.jpg/320px-VW_Tiguan_5N_facelift.jpg' },
+        { name:'미니 쿠퍼 R56', year:'2013년형', price:'750만원', km:'7.8만km', fuel:'터보', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Mini_R56_Cooper_S_front_20100907.jpg/320px-Mini_R56_Cooper_S_front_20100907.jpg' },
+        { name:'볼보 V40', year:'2015년형', price:'920만원', km:'6.9만km', fuel:'터보', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Volvo_V40_%28facelift%2C_front%29.jpg/320px-Volvo_V40_%28facelift%2C_front%29.jpg' },
+      ],
+      '1,000-2,000만원': [
+        { name:'BMW 5시리즈 G30', year:'2018년형', price:'1,800만원', km:'5.5만km', fuel:'디젤', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/BMW_G30_front_20170309.jpg/320px-BMW_G30_front_20170309.jpg' },
+        { name:'벤츠 E클래스 W213', year:'2017년형', price:'1,900만원', km:'6.0만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/2016_Mercedes-Benz_E-Class_%28W213%29_E220d_sedan_%282018-08-27%29_01.jpg/320px-2016_Mercedes-Benz_E-Class_%28W213%29_E220d_sedan_%282018-08-27%29_01.jpg' },
+        { name:'아우디 A6 C8', year:'2019년형', price:'1,950만원', km:'4.0만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Audi_A6_C8_IMG_3192.jpg/320px-Audi_A6_C8_IMG_3192.jpg' },
+        { name:'볼보 XC60 2세대', year:'2018년형', price:'1,600만원', km:'5.2만km', fuel:'터보', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Volvo_XC60_II_IMG_3571.jpg/320px-Volvo_XC60_II_IMG_3571.jpg' },
+      ],
+      '2,000만원 이상': [
+        { name:'BMW 5시리즈 최신형', year:'2022년형', price:'4,200만원', km:'2.1만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/BMW_G30_front_20170309.jpg/320px-BMW_G30_front_20170309.jpg' },
+        { name:'벤츠 E클래스 최신형', year:'2022년형', price:'4,800만원', km:'1.8만km', fuel:'가솔린', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/2016_Mercedes-Benz_E-Class_%28W213%29_E220d_sedan_%282018-08-27%29_01.jpg/320px-2016_Mercedes-Benz_E-Class_%28W213%29_E220d_sedan_%282018-08-27%29_01.jpg' },
+        { name:'포르쉐 카이엔', year:'2017년형', price:'5,500만원', km:'4.5만km', fuel:'가솔린', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Porsche_Cayenne_958_facelift_front.jpg/320px-Porsche_Cayenne_958_facelift_front.jpg' },
+        { name:'렉서스 RX 350', year:'2019년형', price:'3,200만원', km:'3.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2020_Lexus_RX_350_F_Sport%2C_front_11.9.19.jpg/320px-2020_Lexus_RX_350_F_Sport%2C_front_11.9.19.jpg' },
+      ],
+    },
+    '전기차': {
+      '500만원 이하': [
+        { name:'기아 레이 EV 구형', year:'2015년형', price:'250만원', km:'8.0만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kia_Ray_%28DS%29_01.jpg/320px-Kia_Ray_%28DS%29_01.jpg' },
+        { name:'쉐보레 스파크 EV 구형', year:'2016년형', price:'320만원', km:'7.5만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Chevrolet_Spark_M400_01.jpg/320px-Chevrolet_Spark_M400_01.jpg' },
+        { name:'르노 SM3 Z.E.', year:'2016년형', price:'200만원', km:'9.5만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Renault_Samsung_SM5_Nova.jpg/320px-Renault_Samsung_SM5_Nova.jpg' },
+        { name:'닛산 리프 1세대', year:'2015년형', price:'280만원', km:'8.8만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Nissan_Leaf_002.JPG/320px-Nissan_Leaf_002.JPG' },
+      ],
+      '500-1,000만원': [
+        { name:'현대 아이오닉 EV', year:'2018년형', price:'720만원', km:'5.8만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Hyundai_IONIQ_Electric_01.jpg/320px-Hyundai_IONIQ_Electric_01.jpg' },
+        { name:'기아 쏘울 EV 2세대', year:'2019년형', price:'880만원', km:'5.2만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kia_Soul_EV_SK3_01.jpg/320px-Kia_Soul_EV_SK3_01.jpg' },
+        { name:'닛산 리프 2세대', year:'2019년형', price:'820만원', km:'5.5만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Nissan_Leaf_002.JPG/320px-Nissan_Leaf_002.JPG' },
+        { name:'쉐보레 볼트 EV 1세대', year:'2018년형', price:'950만원', km:'6.0만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Chevrolet_Bolt_EV_01.jpg/320px-Chevrolet_Bolt_EV_01.jpg' },
+      ],
+      '1,000-2,000만원': [
+        { name:'현대 아이오닉 5 초기형', year:'2021년형', price:'2,200만원', km:'3.5만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/2022_Hyundai_IONIQ_5_%28NE%29_Standard_Range_2WD_%28KR%29_front.jpg/320px-2022_Hyundai_IONIQ_5_%28NE%29_Standard_Range_2WD_%28KR%29_front.jpg' },
+        { name:'기아 EV6 스탠다드', year:'2022년형', price:'2,100만원', km:'2.8만km', fuel:'전기', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Kia_EV6_CV_01.jpg/320px-Kia_EV6_CV_01.jpg' },
+        { name:'현대 코나 EV 2세대', year:'2022년형', price:'1,700만원', km:'4.0만km', fuel:'전기', tags:['즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Hyundai_Kona_OS_Electric_facelift.jpg/320px-Hyundai_Kona_OS_Electric_facelift.jpg' },
+        { name:'쉐보레 볼트 EUV', year:'2022년형', price:'1,800만원', km:'2.5만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Chevrolet_Bolt_EV_01.jpg/320px-Chevrolet_Bolt_EV_01.jpg' },
+      ],
+      '2,000만원 이상': [
+        { name:'현대 아이오닉 6', year:'2023년형', price:'3,200만원', km:'1.2만km', fuel:'전기', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/2023_Hyundai_IONIQ_6_%28RWD%2C_KR%29_front.jpg/320px-2023_Hyundai_IONIQ_6_%28RWD%2C_KR%29_front.jpg' },
+        { name:'기아 EV9', year:'2023년형', price:'5,500만원', km:'0.8만km', fuel:'전기', tags:['신규등록'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Kia_EV9_GT-Line_01.jpg/320px-Kia_EV9_GT-Line_01.jpg' },
+        { name:'제네시스 GV60', year:'2022년형', price:'4,200만원', km:'2.0만km', fuel:'전기', tags:['무사고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/2023_Genesis_GV60_%28US%29%2C_front_10.26.22.jpg/320px-2023_Genesis_GV60_%28US%29%2C_front_10.26.22.jpg' },
+        { name:'테슬라 모델 Y', year:'2022년형', price:'4,500만원', km:'2.5만km', fuel:'전기', tags:['무사고','즉시출고'], img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Tesla_Model_Y_Standard_Range_at_Wikimedia_CH_2021.jpg/320px-Tesla_Model_Y_Standard_Range_at_Wikimedia_CH_2021.jpg' },
+      ],
+    },
+  };
+
+  // 가격대 정규화 (pill 텍스트 → DB 키 매핑)
+  const PRICE_KEY_MAP = {
+    '500만원 이하': '500만원 이하',
+    '500–1,000만원': '500-1,000만원',
+    '500-1,000만원': '500-1,000만원',
+    '1,000–2,000만원': '1,000-2,000만원',
+    '1,000-2,000만원': '1,000-2,000만원',
+    '2,000만원 이상': '2,000만원 이상',
+  };
+
+  // 현재 검색 필터 상태
+  let s3FilterActive = false;
+  let s3FilterType = null;
+  let s3FilterPrice = null;
+
+  // 탭별 배지 스타일
+  const TAG_STYLE = {
+    '무사고': 'background:var(--green-bg);color:var(--green-txt);border:1px solid var(--green);',
+    '즉시출고': 'background:var(--orange-bg);color:var(--orange);border:1px solid #854F0B;',
+    '당일출고': 'background:var(--blue-bg);color:#7ec8ff;border:1px solid var(--blue);',
+    '정비완료': 'background:rgba(232,255,71,0.08);color:var(--accent);border:1px solid rgba(232,255,71,0.25);',
+    '신규등록': 'background:var(--blue-bg);color:#7ec8ff;border:1px solid var(--blue);',
+  };
+
+  function buildCarCard(c, rank) {
+    const rankColors = ['var(--orange)', '#aaa', '#aaa', '#aaa'];
+    const badgeLabels = ['인기 1위', '인기 2위', '인기 3위', '인기 4위'];
+    const badgeStyles = [
+      'badge-red', 'badge-blue', 'badge-accent', 'badge-green'
+    ];
+    const tagsHtml = c.tags.map(t =>
+      `<span class="car-tag" style="${TAG_STYLE[t] || ''}">${t}</span>`
+    ).join('');
+    return `
+      <div class="car-card" style="opacity:0;transform:translateY(10px)">
+        <div class="car-body">
+          <div class="car-name">${c.name}</div>
+          <div class="car-year">${c.year} · ${c.fuel}</div>
+          <div class="car-price">${c.price}</div>
+          <div class="car-metas">
+            <span class="car-meta">${c.year.replace('년형','년')}</span>
+            <span class="car-meta">${c.km}</span>
+            <span class="car-meta">${c.fuel}</span>
+          </div>
+          <div class="car-tags">${tagsHtml}</div>
+          <div class="car-divider"></div>
+          <div class="car-actions">
+            <button class="car-btn-main" onclick="scrollToSection('s2')">한도조회</button>
+            <button class="car-btn-sub" onclick="openConsultModal('${c.name}','${c.price}')">상담</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderS3Cards(cars) {
+    const grid = document.getElementById('carGrid');
+    grid.innerHTML = cars.map((c, i) => buildCarCard(c, i)).join('');
+    // 애니메이션
+    Array.from(grid.children).forEach((card, i) => {
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, i * 70);
+    });
+    // observer 재등록
+    Array.from(grid.children).forEach(el => observer.observe(el));
+    window._originalCards = null; // 원본 캐시 무효화
+  }
+
+  // ─── 전체 매물 모달 ───
+  const TYPE_COLORS = {
+    'SUV':   { bg:'rgba(29,158,117,0.15)', color:'var(--green-txt)' },
+    '세단':  { bg:'rgba(55,138,221,0.15)', color:'#7ec8ff' },
+    '경차':  { bg:'rgba(239,159,39,0.15)', color:'var(--orange)' },
+    '수입차':{ bg:'rgba(232,255,71,0.1)',  color:'var(--accent)' },
+    '전기차':{ bg:'rgba(55,138,221,0.15)', color:'#7ec8ff' },
+  };
+  const PRICE_BANDS = ['500만원 이하','500-1,000만원','1,000-2,000만원','2,000만원 이상'];
+  const ALL_TYPES   = ['SUV','세단','경차','수입차','전기차'];
+
+  let acType = '전체';
+  let acPrice = '전체';
+
+  function openAllCarsModal() {
+    acType = '전체'; acPrice = '전체';
+    document.querySelectorAll('.ac-type-btn').forEach(b => b.classList.toggle('active', b.textContent === '전체'));
+    document.querySelectorAll('.ac-price-btn').forEach(b => b.classList.toggle('active', b.textContent === '전체'));
+    renderAllCars();
+    document.getElementById('allCarsModal').classList.add('open');
+  }
+  function closeAllCarsModal(e) {
+    if (e.target === document.getElementById('allCarsModal')) {
+      document.getElementById('allCarsModal').classList.remove('open');
+    }
+  }
+  function acSelectType(el, t) {
+    acType = t;
+    document.querySelectorAll('.ac-type-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderAllCars();
+  }
+  function acSelectPrice(el, p) {
+    acPrice = p;
+    document.querySelectorAll('.ac-price-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderAllCars();
+  }
+  function renderAllCars() {
+    const types  = acType  === '전체' ? ALL_TYPES  : [acType];
+    const prices = acPrice === '전체' ? PRICE_BANDS : [acPrice];
+    const grid = document.getElementById('allCarsGrid');
+    let html = '';
+    let total = 0;
+    for (const type of types) {
+      for (const price of prices) {
+        const cars = WIDGET_DB[type]?.[price] || [];
+        for (const c of cars) {
+          const tc = TYPE_COLORS[type] || { bg:'rgba(255,255,255,0.05)', color:'#aaa' };
+          const tagsHtml = c.tags.map(t =>
+            `<span class="ac-car-tag" style="${TAG_STYLE[t] || ''}">${t}</span>`
+          ).join('');
+          html += `<div class="ac-car-card" onclick="openConsultModal('${c.name}','${c.price}')">
+            <img src="${c.img}" alt="${c.name}" onerror="this.style.display='none'">
+            <div class="ac-car-body">
+              <span class="ac-type-label" style="background:${tc.bg};color:${tc.color};">${type}</span>
+              <div class="ac-car-name">${c.name}</div>
+              <div class="ac-car-year">${c.year} · ${c.fuel}</div>
+              <div class="ac-car-price">${c.price}</div>
+              <div class="ac-car-tags">${tagsHtml}</div>
+            </div>
+          </div>`;
+          total++;
+        }
+      }
+    }
+    grid.innerHTML = html || '<p style="color:var(--text3);padding:24px;text-align:center;">해당 조건의 매물이 없어요</p>';
+    document.getElementById('allCarsTotal').textContent = total;
+  }
+
   // ─── 필터 토글 ───
   let selectedType = 'SUV';
   let selectedPrice = '500–1,000만원';
@@ -1990,49 +2260,85 @@ function editReview(index) {
     updatePreview();
   }
 
-  const previewData = {
-    'SUV':   [{ e:'🚙', n:'현대 투싼 NX4',    m:'2021 · 3.8만km · 가솔린', p:'2,290만' },
-              { e:'🚐', n:'기아 스포티지 NQ5', m:'2022 · 2.5만km · 가솔린', p:'2,490만' },
-              { e:'🚗', n:'쌍용 티볼리',       m:'2020 · 4.2만km · 가솔린', p:'1,490만' }],
-    '세단':  [{ e:'🚗', n:'현대 아반떼 AD',   m:'2020 · 4.8만km · 가솔린', p:'1,190만' },
-              { e:'🚘', n:'기아 K5 3세대',     m:'2021 · 3.2만km · 가솔린', p:'1,650만' },
-              { e:'🚗', n:'르노 SM6',          m:'2020 · 5.2만km · 가솔린', p:'1,380만' }],
-    '경차':  [{ e:'🚗', n:'기아 모닝',         m:'2021 · 2.1만km · 가솔린', p:'720만' },
-              { e:'🚗', n:'현대 캐스퍼',       m:'2022 · 1.8만km · 가솔린', p:'980만' },
-              { e:'🚗', n:'쉐보레 스파크',     m:'2020 · 3.5만km · 가솔린', p:'650만' }],
-    '수입차':[{ e:'🚘', n:'BMW 520i',          m:'2019 · 5.5만km · 가솔린', p:'3,200만' },
-              { e:'🚘', n:'벤츠 E220d',        m:'2018 · 6.0만km · 디젤',   p:'2,980만' },
-              { e:'🚗', n:'아우디 A4',          m:'2020 · 4.0만km · 가솔린', p:'2,750만' }],
-    '전기차':[{ e:'⚡', n:'현대 아이오닉6',   m:'2023 · 1.2만km · 전기',   p:'2,890만' },
-              { e:'⚡', n:'기아 EV6',           m:'2022 · 2.0만km · 전기',   p:'3,100만' },
-              { e:'⚡', n:'테슬라 모델3',       m:'2021 · 3.5만km · 전기',   p:'3,400만' }],
-  };
-  const counts = { 'SUV':22, '세단':34, '경차':12, '수입차':8, '전기차':6 };
-
+  // previewData도 WIDGET_DB에서 파생
   function updatePreview() {
-    const cars = previewData[selectedType] || previewData['SUV'];
+    const priceKey = PRICE_KEY_MAP[selectedPrice] || Object.keys(WIDGET_DB['SUV'])[1];
+    const typeData = WIDGET_DB[selectedType] || WIDGET_DB['SUV'];
+    // 가장 가까운 가격대 찾기
+    const cars = typeData[priceKey] || typeData[Object.keys(typeData)[0]];
     const container = document.getElementById('s1Preview');
     const countEl = document.getElementById('resultCount');
-    container.innerHTML = cars.map(c => `
-      <div class="s1-preview-card" onclick="openConsultModal('${c.n}','${c.p}')">
-        <div class="s1-preview-img">${c.e}</div>
-        <div style="flex:1">
-          <div class="s1-preview-name">${c.n}</div>
-          <div class="s1-preview-meta">${c.m}</div>
+    container.innerHTML = cars.slice(0,3).map(c => `
+      <div class="s1-preview-card" onclick="openConsultModal('${c.name}','${c.price}')">
+        <div class="s1-preview-img" style="overflow:hidden;padding:0;">
+          <img src="${c.img}" style="width:54px;height:40px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none'">
         </div>
-        <div class="s1-preview-price">${c.p}</div>
+        <div style="flex:1">
+          <div class="s1-preview-name">${c.name}</div>
+          <div class="s1-preview-meta">${c.year} · ${c.km} · ${c.fuel}</div>
+        </div>
+        <div class="s1-preview-price">${c.price}</div>
       </div>
     `).join('');
-    countEl.textContent = counts[selectedType] || '—';
+    countEl.textContent = cars.length;
   }
 
   function handleS1Search() {
     const btn = document.querySelector('.s1-search-btn');
     btn.textContent = '검색 중...';
+
+    const priceKey = PRICE_KEY_MAP[selectedPrice] || null;
+    const typeData = WIDGET_DB[selectedType];
+    const cars = (priceKey && typeData) ? (typeData[priceKey] || null) : null;
+
     setTimeout(() => {
       btn.textContent = '선택한 조건으로 차량 검색';
+
+      if (cars && cars.length > 0) {
+        // 필터 활성화
+        s3FilterActive = true;
+        s3FilterType = selectedType;
+        s3FilterPrice = selectedPrice;
+
+        // 배너 표시
+        const banner = document.getElementById('s3FilterBanner');
+        banner.style.display = 'flex';
+        document.getElementById('s3FilterType').textContent = selectedType;
+        document.getElementById('s3FilterPrice').textContent = priceKey || selectedPrice;
+        document.getElementById('s3FilterCount').textContent = `${cars.length}건 검색됨`;
+
+        // 타이틀 변경
+        document.getElementById('s3Title').textContent = `${selectedType} · ${priceKey || selectedPrice} 추천 차량`;
+        document.getElementById('s3Sub').textContent = '내차 찾기에서 선택하신 조건에 맞는 매물이에요';
+
+        // 인기순 탭 선택 후 필터된 카드 렌더링
+        document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
+        document.querySelector('.s3-tab[data-tab="popular"]').classList.add('on');
+        renderS3Cards(cars);
+      }
+
       scrollToSection('s3');
-    }, 800);
+    }, 700);
+  }
+
+  // ─── 필터 초기화 ───
+  function resetS3Filter() {
+    s3FilterActive = false;
+    s3FilterType = null;
+    s3FilterPrice = null;
+    document.getElementById('s3FilterBanner').style.display = 'none';
+    document.getElementById('s3Title').textContent = '지금 가장 많이 선택한 차량';
+    document.getElementById('s3Sub').textContent = '20~30대가 가장 많이 구매한 인기 매물이에요';
+    // 원본 4개 복원
+    const origCars = [
+      { name:'현대 아반떼 AD', year:'2020년형', price:'1,190만원', km:'4.8만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://i.ifh.cc/PfmKy3.png' },
+      { name:'기아 K5 3세대', year:'2021년형', price:'1,650만원', km:'3.2만km', fuel:'가솔린', tags:['무사고','정비완료'], img:'https://i.ifh.cc/gCLpho.png' },
+      { name:'현대 그랜저 IG', year:'2019년형', price:'2,100만원', km:'6.1만km', fuel:'가솔린', tags:['무사고','즉시출고'], img:'https://i.ifh.cc/8wrt41.png' },
+      { name:'기아 스포티지 NQ5', year:'2022년형', price:'2,490만원', km:'2.5만km', fuel:'가솔린 터보', tags:['무사고','당일출고'], img:'https://i.ifh.cc/l7yDPS.png' },
+    ];
+    renderS3Cards(origCars);
+    document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
+    document.querySelector('.s3-tab[data-tab="popular"]').classList.add('on');
   }
 
   // ─── 히어로 검색 ───
@@ -2040,46 +2346,48 @@ function editReview(index) {
     scrollToSection('s3');
   }
 
-  // ─── 탭 ───
+  // ─── 탭 (필터 없을 때만 원본 재정렬) ───
   const tabOrders = {
-  popular: [0,1,3,2],
-  price:   [0,1,2,3],
-  new:     [3,1,0,2],
-  quick:   [3,0,2,1],
-};
-  function selectTab(el) {
-  document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
-  el.classList.add('on');
-  const tab = el.dataset.tab;
-  const grid = document.getElementById('carGrid');
-
-  // 항상 원본 순서(0~3) 기준으로 카드를 가져오기 위해 id로 고정
-  const allCards = {
-    0: document.querySelector('#carGrid .car-card:nth-child(1)'),
-    1: document.querySelector('#carGrid .car-card:nth-child(2)'),
-    2: document.querySelector('#carGrid .car-card:nth-child(3)'),
-    3: document.querySelector('#carGrid .car-card:nth-child(4)'),
+    popular: [0,1,2,3],
+    price:   [0,1,2,3],
+    new:     [2,1,0,3],
+    quick:   [3,0,2,1],
   };
 
-  // 최초 1회 원본 카드 저장
-  if (!window._originalCards) {
-    window._originalCards = [0,1,2,3].map(i => grid.children[i].cloneNode(true));
+  function selectTab(el) {
+    document.querySelectorAll('.s3-tab').forEach(t => t.classList.remove('on'));
+    el.classList.add('on');
+    const tab = el.dataset.tab;
+
+    // 필터 활성 상태면 탭 변경해도 같은 차량 유지 (순서만 섞기)
+    if (s3FilterActive && s3FilterType && s3FilterPrice) {
+      const priceKey = PRICE_KEY_MAP[s3FilterPrice] || s3FilterPrice;
+      const cars = WIDGET_DB[s3FilterType]?.[priceKey];
+      if (cars) {
+        const order = tabOrders[tab] || [0,1,2,3];
+        const reordered = order.map(i => cars[i]).filter(Boolean);
+        renderS3Cards(reordered);
+        return;
+      }
+    }
+
+    const grid = document.getElementById('carGrid');
+    if (!window._originalCards) {
+      window._originalCards = Array.from(grid.children).map(c => c.cloneNode(true));
+    }
+    const order = tabOrders[tab] || [0,1,2,3];
+    const reordered = order.map(i => window._originalCards[i]).filter(Boolean).map(c => c.cloneNode(true));
+    reordered.forEach(c => { c.style.opacity = '0'; c.style.transform = 'translateY(10px)'; });
+    grid.innerHTML = '';
+    reordered.forEach((c, i) => {
+      grid.appendChild(c);
+      setTimeout(() => {
+        c.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        c.style.opacity = '1';
+        c.style.transform = 'translateY(0)';
+      }, i * 60);
+    });
   }
-
-  const order = tabOrders[tab] || [0,1,2,3];
-  const reordered = order.map(i => window._originalCards[i].cloneNode(true));
-
-  reordered.forEach(c => { c.style.opacity = '0'; c.style.transform = 'translateY(10px)'; });
-  grid.innerHTML = '';
-  reordered.forEach((c, i) => {
-    grid.appendChild(c);
-    setTimeout(() => {
-      c.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      c.style.opacity = '1';
-      c.style.transform = 'translateY(0)';
-    }, i * 60);
-  });
-}
 
   // ─── 한도조회 폼 ───
   function handleLimitSubmit() {
@@ -2127,6 +2435,9 @@ function editReview(index) {
     el.style.transition = `opacity 0.45s ease ${i * 0.07}s, transform 0.45s ease ${i * 0.07}s`;
     observer.observe(el);
   });
+
+  // 초기 프리뷰 렌더링
+  updatePreview();
 
   // ─── Header scroll effect ───
   window.addEventListener('scroll', () => {
